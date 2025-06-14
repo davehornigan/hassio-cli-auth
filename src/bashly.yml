@@ -1,0 +1,55 @@
+name: auth
+help: Home Assistant CLI auth
+version: 0.1.0
+
+commands:
+  - name: lldap
+    help: Login with LLDAP
+
+    args:
+      - name: server-url
+        required: true
+        help: LLDAP API URL
+      - name: user-groups
+        unique: true
+        repeatable: true
+        help: |
+          Find users that has permission to access homeassistant, anyone inside this group will have the default 'system-users' permission in homeassistant.
+
+    flags:
+      - long: --admin-group
+        arg: GROUP
+        unique: true
+        repeatable: true
+        help: |
+          Allow users in the <regular user group> to be assigned into 'system-admin' group.
+          Anyone inside this group will not have the 'system-users' permission as only one permission group is allowed in homeassistant
+      - long: --local-group
+        arg: GROUP
+        unique: true
+        repeatable: true
+        help: |
+          Users in the <local user group> (e.g., 'homeassistant_local') can only access homeassistant inside LAN network.
+      - &timeout
+        long: --timeout
+        short: -t
+        arg: TIMEOUT
+        help: "Request timeout"
+        default: "3"
+      - &debug
+        long: --debug
+        short: -d
+        help: Log script messages to stderr
+      - &insecure
+        long: --insecure
+        short: -k
+        help: Skip certificate validation
+
+    examples: []
+
+    environment_variables:
+      - name: username
+        help: Home Assistant username
+      - name: password
+        help: Home Assistant password
+
