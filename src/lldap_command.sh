@@ -45,7 +45,7 @@ is_local() {
 log "`inspect_args`"
 
 log "Try to login"
-RESPONSE=`curl $CURL_OPTIONS -H "Content-type: application/json" -d '{"username":"'"$USERNAME"'","password":"'"$PASSWORD"'"}' "$SERVER_URL/auth/simple/login"`
+RESPONSE=`curl $CURL_OPTIONS -H "Content-type: application/json" -d '{"username":"'"$username"'","password":"'"$password"'"}' "$SERVER_URL/auth/simple/login"`
 log "Response: $RESPONSE"
 if [[ $? -ne 0 ]]; then
     log "Auth failed"
@@ -60,7 +60,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 log "Get User"
-RESPONSE=`curl -f $CURL_OPTIONS -m "$REQUEST_TIMEOUT" -H "Content-type: application/json" -H "Authorization: Bearer ${TOKEN}" -d '{"variables":{"id":"'"$USERNAME"'"},"query":"query($id:String!){user(userId:$id){displayName groups{displayName}}}"}' "$SERVER_URL/api/graphql"`
+RESPONSE=`curl -f $CURL_OPTIONS -m "$REQUEST_TIMEOUT" -H "Content-type: application/json" -H "Authorization: Bearer ${TOKEN}" -d '{"variables":{"id":"'"$username"'"},"query":"query($id:String!){user(userId:$id){displayName groups{displayName}}}"}' "$SERVER_URL/api/graphql"`
 log "Response: $RESPONSE"
 if [[ $? -ne 0 ]]; then
     log "Failed to get user"
